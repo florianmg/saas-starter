@@ -1,3 +1,5 @@
+import cn from 'classnames';
+
 interface IInput {
   label?: string;
   id: string;
@@ -5,6 +7,7 @@ interface IInput {
   placeholder?: string;
   className?: string;
   value: string;
+  error?: string;
   onChange: (newValue: string) => void;
 }
 const Input: React.FC<IInput> = ({
@@ -13,6 +16,7 @@ const Input: React.FC<IInput> = ({
   type = 'string',
   placeholder = '',
   className = '',
+  error,
   value,
   onChange,
 }) => {
@@ -23,6 +27,9 @@ const Input: React.FC<IInput> = ({
     <div className={className}>
       {label && <label htmlFor={id}>{label}</label>}
       <input
+        className={cn('w-full border', {
+          'border-red-500': !!error,
+        })}
         id={id}
         type={type}
         placeholder={placeholder}

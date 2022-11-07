@@ -6,7 +6,9 @@ interface IButton {
 const Button: React.FC<IButton> = ({ label, className = '', onClick }) => {
   return (
     <div className={className}>
-      <button onClick={onClick}>{label}</button>
+      <button className="border w-full" onClick={onClick}>
+        {label}
+      </button>
     </div>
   );
 };
