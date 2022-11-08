@@ -16,3 +16,10 @@ export const APP_ROUTES = {
     URL: '/tableau-de-bord',
   },
 };
+
+export const LOGGED_NAVIGATION = [APP_ROUTES.HOME, APP_ROUTES.DASHBOARD];
+export const NOT_LOGGED_NAVIGATION = [
+  APP_ROUTES.HOME,
+  APP_ROUTES.LOGIN,
+  APP_ROUTES.REGISTER,
+];

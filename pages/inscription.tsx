@@ -14,6 +14,7 @@ import {
 
 import Input from '../components/Input';
 import Button from '../components/Button';
+import PageContainer from '../components/PageContainer';
 
 import { APP_ROUTES } from '../constants';
 
@@ -68,56 +69,58 @@ const Inscription: NextPage = () => {
     if (response.success) router.push(APP_ROUTES.DASHBOARD.URL);
   };
   return (
-    <main>
-      <h1>Inscription</h1>
-      <Input
-        id="email"
-        label="Adresse mail"
-        value={formValues.email}
-        onChange={handleUpdateEmail}
-        error={formErrors.email}
-      />
-      <Input
-        type="password"
-        id="password"
-        label="Mot de passe"
-        value={formValues.password}
-        onChange={handleUpdatePassword}
-        error={formErrors.password}
-      />
-      <div className="font-bold text-xs">
-        <p>Conditions du mot de passe:</p>
-        <ul className="list-disc">
-          <li
-            className={cn({
-              'text-red-500': !isPasswordLongEnouph(formValues.password),
-            })}
+    <PageContainer>
+      <>
+        <h1>Inscription</h1>
+        <Input
+          id="email"
+          label="Adresse mail"
+          value={formValues.email}
+          onChange={handleUpdateEmail}
+          error={formErrors.email}
+        />
+        <Input
+          type="password"
+          id="password"
+          label="Mot de passe"
+          value={formValues.password}
+          onChange={handleUpdatePassword}
+          error={formErrors.password}
+        />
+        <div className="font-bold text-xs">
+          <p>Conditions du mot de passe:</p>
+          <ul className="list-disc">
+            <li
+              className={cn({
+                'text-red-500': !isPasswordLongEnouph(formValues.password),
+              })}
+            >
+              - Au moins 6 charactères
+            </li>
+            <li
+              className={cn({
+                'text-red-500': !isPasswordContainSpecialChar(
+                  formValues.password
+                ),
+              })}
+            >
+              - Au moins 1 chatactère spécial
+            </li>
+          </ul>
+        </div>
+        <Button onClick={handleEmailRegister} label="S'inscrire" />
+        <Button onClick={handleGoogleAuth} label="Continuer avec Google" />
+        <p>
+          Vous avez déjà un compte ?{' '}
+          <Link
+            className="underline underline-offset-2"
+            href={APP_ROUTES.LOGIN.URL}
           >
-            - Au moins 6 charactères
-          </li>
-          <li
-            className={cn({
-              'text-red-500': !isPasswordContainSpecialChar(
-                formValues.password
-              ),
-            })}
-          >
-            - Au moins 1 chatactère spécial
-          </li>
-        </ul>
-      </div>
-      <Button onClick={handleEmailRegister} label="S'inscrire" />
-      <Button onClick={handleGoogleAuth} label="Continuer avec Google" />
-      <p>
-        Vous avez déjà un compte ?{' '}
-        <Link
-          className="underline underline-offset-2"
-          href={APP_ROUTES.LOGIN.URL}
-        >
-          Se connecter
-        </Link>
-      </p>
-    </main>
+            Se connecter
+          </Link>
+        </p>
+      </>
+    </PageContainer>
   );
 };
 

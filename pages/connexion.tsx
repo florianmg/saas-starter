@@ -8,6 +8,7 @@ import { isValidEmail } from '../lib/forms/validators';
 
 import Input from '../components/Input';
 import Button from '../components/Button';
+import PageContainer from '../components/PageContainer';
 
 import { APP_ROUTES } from '../constants';
 
@@ -63,35 +64,37 @@ const Connexion: NextPage = () => {
   };
 
   return (
-    <main>
-      <h1>Connexion</h1>
-      <Input
-        id="email"
-        label="Adresse mail"
-        value={formValues.email}
-        onChange={handleUpdateEmail}
-        error={formErrors.email}
-      />
-      <Input
-        type="password"
-        id="password"
-        label="Mot de passe"
-        value={formValues.password}
-        onChange={handleUpdatePassword}
-        error={formErrors.password}
-      />
-      <Button onClick={handleEmailLogin} label="Se connecter" />
-      <Button onClick={handleGoogleAuth} label="Continuer avec Google" />
-      <p>
-        Vous n'avez pas de compte ?{' '}
-        <Link
-          className="underline underline-offset-2"
-          href={APP_ROUTES.REGISTER.URL}
-        >
-          Créer un compte
-        </Link>
-      </p>
-    </main>
+    <PageContainer>
+      <>
+        <h1>Connexion</h1>
+        <Input
+          id="email"
+          label="Adresse mail"
+          value={formValues.email}
+          onChange={handleUpdateEmail}
+          error={formErrors.email}
+        />
+        <Input
+          type="password"
+          id="password"
+          label="Mot de passe"
+          value={formValues.password}
+          onChange={handleUpdatePassword}
+          error={formErrors.password}
+        />
+        <Button onClick={handleEmailLogin} label="Se connecter" />
+        <Button onClick={handleGoogleAuth} label="Continuer avec Google" />
+        <p>
+          Vous n'avez pas de compte ?{' '}
+          <Link
+            className="underline underline-offset-2"
+            href={APP_ROUTES.REGISTER.URL}
+          >
+            Créer un compte
+          </Link>
+        </p>
+      </>
+    </PageContainer>
   );
 };
 
