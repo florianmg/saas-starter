@@ -15,9 +15,17 @@ export const APP_ROUTES = {
     NAME: 'Tableau de bord',
     URL: '/tableau-de-bord',
   },
+  LOGOUT: {
+    NAME: 'Déconnexion',
+    URL: '/logout',
+  },
 };
 
-export const LOGGED_NAVIGATION = [APP_ROUTES.HOME, APP_ROUTES.DASHBOARD];
+export const LOGGED_NAVIGATION = [
+  APP_ROUTES.HOME,
+  APP_ROUTES.DASHBOARD,
+  APP_ROUTES.LOGOUT,
+];
 export const NOT_LOGGED_NAVIGATION = [
   APP_ROUTES.HOME,
   APP_ROUTES.LOGIN,
