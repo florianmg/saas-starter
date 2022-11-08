@@ -16,11 +16,13 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import PageContainer from '../components/PageContainer';
 import Loader from '../components/Loader';
+import Alert from '../components/Alert';
 
 import { APP_ROUTES } from '../constants';
 
 const Inscription: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [globalError, setGlobalError] = useState<string[]>();
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -66,6 +68,10 @@ const Inscription: NextPage = () => {
     if (response.success) {
       router.push(APP_ROUTES.DASHBOARD.URL);
     } else {
+      setGlobalError([
+        "Une erreur est survenur lors de l'inscription.",
+        'Vérifiez que les conditions des champs sont bien remplies et réessayez.',
+      ]);
       setIsLoading(false);
     }
   };
@@ -76,6 +82,10 @@ const Inscription: NextPage = () => {
     if (response.success) {
       router.push(APP_ROUTES.DASHBOARD.URL);
     } else {
+      setGlobalError([
+        "Une erreur est survenue lors de l'inscription avec votre compte Google.",
+        'Merci de réessayer.',
+      ]);
       setIsLoading(false);
     }
   };
@@ -92,6 +102,7 @@ const Inscription: NextPage = () => {
     <PageContainer>
       <>
         <h1>Inscription</h1>
+        {globalError && <Alert type="error" message={globalError} />}
         <Input
           id="email"
           label="Adresse mail"

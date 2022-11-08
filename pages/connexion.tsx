@@ -10,11 +10,13 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import PageContainer from '../components/PageContainer';
 import Loader from '../components/Loader';
+import Alert from '../components/Alert';
 
 import { APP_ROUTES } from '../constants';
 
 const Connexion: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [globalError, setGlobalError] = useState<string[]>();
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -60,6 +62,10 @@ const Connexion: NextPage = () => {
     if (response.success) {
       router.push(APP_ROUTES.DASHBOARD.URL);
     } else {
+      setGlobalError([
+        'Une erreur est survenur lors de la connexion.',
+        "Aucun couple Mail / Mot de passe correspondant n'a été trouvé",
+      ]);
       setIsLoading(false);
     }
   };
@@ -70,6 +76,10 @@ const Connexion: NextPage = () => {
     if (response.success) {
       router.push(APP_ROUTES.DASHBOARD.URL);
     } else {
+      setGlobalError([
+        'Une erreur est survenue lors de la connexion avec votre compte Google.',
+        'Merci de réessayer.',
+      ]);
       setIsLoading(false);
     }
   };
@@ -85,6 +95,8 @@ const Connexion: NextPage = () => {
     <PageContainer>
       <>
         <h1>Connexion</h1>
+        {globalError && <Alert type="error" message={globalError} />}
+
         <Input
           id="email"
           label="Adresse mail"
