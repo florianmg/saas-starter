@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import cn from 'classnames';
 
@@ -25,6 +26,7 @@ const Inscription: NextPage = () => {
     email: '',
     password: '',
   });
+  const router = useRouter();
   const { emailRegister, googleAuth } = useAuthentification();
   const handleUpdateEmail = (newValue: string) =>
     setFormValues({ ...formValues, email: newValue });
@@ -57,7 +59,13 @@ const Inscription: NextPage = () => {
       return;
     }
 
-    await emailRegister({ ...formValues });
+    const response = await emailRegister({ ...formValues });
+    if (response.success) router.push(APP_ROUTES.DASHBOARD.URL);
+  };
+
+  const handleGoogleAuth = async () => {
+    const response = await googleAuth();
+    if (response.success) router.push(APP_ROUTES.DASHBOARD.URL);
   };
   return (
     <main>
@@ -99,7 +107,7 @@ const Inscription: NextPage = () => {
         </ul>
       </div>
       <Button onClick={handleEmailRegister} label="S'inscrire" />
-      <Button onClick={googleAuth} label="Continuer avec Google" />
+      <Button onClick={handleGoogleAuth} label="Continuer avec Google" />
       <p>
         Vous avez déjà un compte ?{' '}
         <Link

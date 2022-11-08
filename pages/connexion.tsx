@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import useAuthentification from '../hooks/useAuthentification';
 import { isValidEmail } from '../lib/forms/validators';
@@ -19,6 +20,7 @@ const Connexion: NextPage = () => {
     email: '',
     password: '',
   });
+  const router = useRouter();
   const { emailLogin, googleAuth } = useAuthentification();
 
   const handleUpdateEmail = (newValue: string) =>
@@ -51,7 +53,13 @@ const Connexion: NextPage = () => {
       return;
     }
 
-    await emailLogin({ ...formValues });
+    const response = await emailLogin({ ...formValues });
+    if (response.success) router.push(APP_ROUTES.DASHBOARD.URL);
+  };
+
+  const handleGoogleAuth = async () => {
+    const response = await googleAuth();
+    if (response.success) router.push(APP_ROUTES.DASHBOARD.URL);
   };
 
   return (
@@ -73,7 +81,7 @@ const Connexion: NextPage = () => {
         error={formErrors.password}
       />
       <Button onClick={handleEmailLogin} label="Se connecter" />
-      <Button onClick={googleAuth} label="Continuer avec Google" />
+      <Button onClick={handleGoogleAuth} label="Continuer avec Google" />
       <p>
         Vous n'avez pas de compte ?{' '}
         <Link
