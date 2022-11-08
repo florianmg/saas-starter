@@ -9,10 +9,12 @@ import { isValidEmail } from '../lib/forms/validators';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import PageContainer from '../components/PageContainer';
+import Loader from '../components/Loader';
 
 import { APP_ROUTES } from '../constants';
 
 const Connexion: NextPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -53,16 +55,32 @@ const Connexion: NextPage = () => {
       setFormErrors(newFormErrors);
       return;
     }
-
+    setIsLoading(true);
     const response = await emailLogin({ ...formValues });
-    if (response.success) router.push(APP_ROUTES.DASHBOARD.URL);
+    if (response.success) {
+      router.push(APP_ROUTES.DASHBOARD.URL);
+    } else {
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleAuth = async () => {
+    setIsLoading(true);
     const response = await googleAuth();
-    if (response.success) router.push(APP_ROUTES.DASHBOARD.URL);
+    if (response.success) {
+      router.push(APP_ROUTES.DASHBOARD.URL);
+    } else {
+      setIsLoading(false);
+    }
   };
-
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <div className="w-16 h-16">
+          <Loader />
+        </div>
+      </div>
+    );
   return (
     <PageContainer>
       <>
