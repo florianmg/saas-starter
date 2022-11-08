@@ -36,6 +36,12 @@ const Input: React.FC<IInput> = ({
         value={value}
         onChange={handleOnChange}
       />
+      {error && (
+        <p
+          dangerouslySetInnerHTML={{ __html: error }}
+          className="text-red-500"
+        />
+      )}
     </div>
   );
 };
